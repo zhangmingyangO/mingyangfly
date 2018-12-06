@@ -4,12 +4,12 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.neusoft</groupId>
-    <artifactId>ssm_maven_demo</artifactId>
+    <groupId>neusoft</groupId>
+    <artifactId>neusoft</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>war</packaging>
 
-    <name>ssm_maven_demo Maven Webapp</name>
+    <name>neusoft Maven Webapp</name>
     <!-- FIXME change it to the project's website -->
     <url>http://www.example.com</url>
 
@@ -26,23 +26,28 @@
         <log4j.version>1.2.17</log4j.version>
     </properties>
 
-
     <dependencies>
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>4.11</version>
+            <version>3.8.1</version>
             <scope>test</scope>
         </dependency>
-
+        <!-- 导入java ee jar包（可以去除index.jsp报错） -->
         <dependency>
             <groupId>javax</groupId>
             <artifactId>javaee-api</artifactId>
             <version>7.0</version>
         </dependency>
-
-
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.11</version>
+            <!-- 表示开发的时候引入，发布的时候不会加载此包 -->
+            <scope>test</scope>
+        </dependency>
         <!-- spring核心包 -->
+
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-core</artifactId>
@@ -126,11 +131,11 @@
             <version>${log4j.version}</version>
         </dependency>
         <!-- 格式化对象，方便输出日志 -->
-        <!--<dependency>-->
-        <!--<groupId>com.alibaba</groupId>-->
-        <!--<artifactId>fastjson</artifactId>-->
-        <!--<version>1.1.41</version>-->
-        <!--</dependency>-->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>1.1.41</version>
+        </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
@@ -164,7 +169,6 @@
             <artifactId>commons-codec</artifactId>
             <version>1.9</version>
         </dependency>
-
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>druid</artifactId>
@@ -173,8 +177,7 @@
     </dependencies>
 
     <build>
-        <finalName>ssm_maven_demo</finalName>
-
+        <finalName>neusoft</finalName>
         <resources>
             <resource>
                 <directory>src/main/java</directory>
@@ -188,8 +191,6 @@
                 <directory>src/main/resources</directory>
             </resource>
         </resources>
-
-
         <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
             <plugins>
                 <plugin>
@@ -221,7 +222,6 @@
                     <artifactId>maven-deploy-plugin</artifactId>
                     <version>2.8.2</version>
                 </plugin>
-
                 <plugin>
                     <!--Mybatis-generator插件,用于自动生成Mapper和POJO-->
                     <groupId>org.mybatis.generator</groupId>
@@ -242,7 +242,6 @@
                         </execution>
                     </executions>
                     <dependencies>
-
                         <dependency>
                             <groupId>org.mybatis.generator</groupId>
                             <artifactId>mybatis-generator-core</artifactId>
@@ -250,10 +249,10 @@
                         </dependency>
                     </dependencies>
                 </plugin>
-
-
             </plugins>
         </pluginManagement>
     </build>
+
+
 
 </project>
