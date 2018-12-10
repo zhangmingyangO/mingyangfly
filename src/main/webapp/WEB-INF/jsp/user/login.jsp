@@ -17,6 +17,39 @@
     <link rel="stylesheet" href="../../static/layui/css/layui.css">
     <link rel="stylesheet" href="../../static/css/global.css">
 </head>
+<script src=" ${pageContext.request.contextPath}/static/jquery-3.3.1.js"></script>
+<script>
+    var result=0;
+    $(function () {
+        var firstNum=Math.floor(Math.random()*20)+1;
+        var SecondNum=Math.floor(Math.random()*20)+1;
+        result=firstNum+SecondNum;
+        $("#spanRenlei").text(firstNum+"+"+SecondNum+"=?");
+    });
+    $(function () {
+        $("#L_vercode").blur(function () {
+            if($("#L_vercode").val() != result){
+                $("#checkRenlei").text("答案错误");
+            }else {
+                $("#checkRenlei").text("");
+            }
+        })
+    });
+    $(function () {
+        $("button[class=layui-btn]").click(function () {
+            if($("#checkRenlei").text() == "答案错误"){
+                alert("答案错误,重新回答");
+                return false;
+            }
+            var  str = $('#form1').text().val()
+            alert(str)
+            if (str.length>0) {
+                alert("注册成功")
+            }
+        })
+
+    })
+</script>
 <body>
 
 <%@include file="../common/header.jsp"%>
@@ -31,11 +64,12 @@
             <div class="layui-form layui-tab-content" id="LAY_ucm" style="padding: 20px 0;">
                 <div class="layui-tab-item layui-show">
                     <div class="layui-form layui-form-pane">
-                        <form method="post" action="${pageContext.request.contextPath}/user/denglu">
+                        <form method="post" action="${pageContext.request.contextPath}/user/dologin">
                             <div class="layui-form-item">
                                 <label for="L_email" class="layui-form-label">邮箱</label>
                                 <div class="layui-input-inline">
                                     <input type="text" id="L_email" name="email" required lay-verify="required" autocomplete="off" class="layui-input">
+                                    <span id="span_checkEmail"></span>
                                 </div>
                             </div>
                             <div class="layui-form-item">
@@ -48,9 +82,10 @@
                                 <label for="L_vercode" class="layui-form-label">人类验证</label>
                                 <div class="layui-input-inline">
                                     <input type="text" id="L_vercode" name="vercode" required lay-verify="required" placeholder="请回答后面的问题" autocomplete="off" class="layui-input">
+                                    <span id="checkRenlei"></span>
                                 </div>
                                 <div class="layui-form-mid">
-                                    <span style="color: #c00;">{{d.vercode}}</span>
+                                    <span style="color: #c00;" id="spanRenlei"></span>
                                 </div>
                             </div>
                             <div class="layui-form-item">

@@ -179,6 +179,7 @@ layui.define(['laypage', 'fly', 'element', 'flow'], function(exports){
             }, function(res){
               location.reload();
             });
+              //location.reload();
           } else {
             layer.msg(res.msg, {icon: 5});
           }

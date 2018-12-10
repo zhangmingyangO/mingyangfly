@@ -21,6 +21,23 @@
 
 </head>
 <script>
+    function checkEmail () {
+        var email = $('#form1').serialize()
+        if ($('#L_email').val().length==0){
+            $('#span_checkEmail').text("邮箱不能为空，请重新输入")
+            return
+        }
+        $.post({
+            url:'${pageContext.request.contextPath}/user/checkEmail',
+            data:email,
+            dataType:'json',
+            success:function (data) {
+                $('#span_checkEmail').text(data.msg)
+            }
+
+        })
+
+    }
   $(function () {
       $("#L_repass").blur(function () {
           var pass = $('#L_pass').val()
@@ -32,6 +49,36 @@
           }
       })
   })
+    var result=0;
+    $(function () {
+        var firstNum=Math.floor(Math.random()*20)+1;
+        var SecondNum=Math.floor(Math.random()*20)+1;
+        result=firstNum+SecondNum;
+        $("#spanRenlei").text(firstNum+"+"+SecondNum+"=?");
+    });
+    $(function () {
+        $("#L_vercode").blur(function () {
+            if($("#L_vercode").val() != result){
+                $("#checkRenlei").text("答案错误");
+            }else {
+                $("#checkRenlei").text("");
+            }
+        })
+    });
+    $(function () {
+        $("button[class=layui-btn]").click(function () {
+            if($("#checkRenlei").text() == "答案错误"){
+                alert("答案错误,重新回答");
+                return false;
+            }
+            var  str = $('#form1').text().val()
+            alert(str)
+            if (str.length>0) {
+                alert("注册成功")
+            }
+        })
+
+    })
 
 </script>
 <body>
@@ -48,11 +95,12 @@
             <div class="layui-form layui-tab-content" id="LAY_ucm" style="padding: 20px 0;">
                 <div class="layui-tab-item layui-show">
                     <div class="layui-form layui-form-pane">
-                        <form method="post" action="${pageContext.request.contextPath}/user/doreg">
+                        <form method="post" action="${pageContext.request.contextPath}/user/doreg" id="form1">
                                 <div class="layui-form-item">
                                 <label for="L_email" class="layui-form-label">邮箱</label>
                                 <div class="layui-input-inline">
-                                    <input type="text" id="L_email" name="email" required lay-verify="email" autocomplete="off" class="layui-input">
+                                    <input type="text" id="L_email" name="email" required lay-verify="email" autocomplete="off" class="layui-input" onblur="checkEmail()">
+                                    <span id="span_checkEmail"></span>
                                 </div>
                                 <div class="layui-form-mid layui-word-aux">将会成为您唯一的登入名</div>
                             </div>
@@ -80,9 +128,10 @@
                                 <label for="L_vercode" class="layui-form-label">人类验证</label>
                                 <div class="layui-input-inline">
                                     <input type="text" id="L_vercode" name="vercode" required lay-verify="required" placeholder="请回答后面的问题" autocomplete="off" class="layui-input">
+                                    <span id="checkRenlei"></span>
                                 </div>
                                 <div class="layui-form-mid">
-                                    <span style="color: #c00;">{{d.vercode}}</span>
+                                    <span style="color: #c00;" id="spanRenlei"></span>
                                 </div>
                             </div>
                             <div class="layui-form-item">

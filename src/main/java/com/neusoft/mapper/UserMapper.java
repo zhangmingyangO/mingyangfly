@@ -15,6 +15,7 @@ public interface UserMapper {
 
     int updateByPrimaryKey(User record);
 
-    User SelectEmail (String email,String passwd );
+    User SelectEmail (String email );
 
+    User SelectEmailAndpwd ( User user );
 }

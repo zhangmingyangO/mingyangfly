@@ -185,7 +185,10 @@
       join_time = #{joinTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <select id="SelectEmail" resultType="int" parameterType="com.neusoft.bean.User">
+  <select id="SelectEmail" resultType="com.neusoft.bean.User" parameterType="String">
     select  * from tab_user where email = #{value}
+  </select>
+  <select id="SelectEmailAndpwd" resultMap="BaseResultMap" parameterType="User">
+     select  * from tab_user where email = #{email} and passwd = #{passwd}
   </select>
 </mapper>
